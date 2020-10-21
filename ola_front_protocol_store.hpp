@@ -4,7 +4,6 @@
 namespace ola {
 namespace front {
 
-
 struct AcquireAppRequest : solid::frame::mprpc::Message {
     static constexpr uint32_t version = 1;
 
@@ -30,6 +29,5 @@ inline void protocol_setup_store(R _r, ProtocolT& _rproto)
     _r(_rproto, solid::TypeToType<AcquireAppRequest>(), {3, 1});
 }
 
-
-}//namespace front
-}//namespace ola
+} //namespace front
+} //namespace ola
