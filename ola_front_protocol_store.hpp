@@ -41,7 +41,7 @@ struct Version{
                 _s.add(_rthis.init_request_, _rctx, 3, "init_request");
             }
         },
-            _rctx, 1, "lambda");
+            _rctx);
     }
     
 };
@@ -56,7 +56,7 @@ struct InitRequest : solid::frame::mprpc::Message {
 
     SOLID_REFLECT_V1(_s, _rthis, _rctx)
     {
-        _s.add(_rthis.auth_version_, _rctx, 0, "store_version");
+        _s.add(_rthis.auth_version_, _rctx, 1, "store_version");
         _s.add([&_rthis](S& _s, solid::frame::mprpc::ConnectionContext& _rctx) {
             
             if(_rthis.version_.init_request_ == Version::init_request){
@@ -65,15 +65,12 @@ struct InitRequest : solid::frame::mprpc::Message {
                 _s.add(_rthis.utility_version_, _rctx, 5, "utility_version");
             }
         },
-            _rctx, 1, "lambda");
+            _rctx);
     }
 };
 
 
 struct AcquireAppRequest : solid::frame::mprpc::Message {
-    static constexpr uint32_t version = 1;
-
-    uint32_t    version_ = version;
     std::string app_id_;
     bool        acquire_ = true;
 
