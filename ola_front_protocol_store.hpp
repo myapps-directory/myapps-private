@@ -56,10 +56,10 @@ struct InitRequest : solid::frame::mprpc::Message {
 
     SOLID_REFLECT_V1(_s, _rthis, _rctx)
     {
-        _s.add(_rthis.auth_version_, _rctx, 1, "store_version");
+        _s.add(_rthis.store_version_, _rctx, 1, "store_version");
         _s.add([&_rthis](S& _s, solid::frame::mprpc::ConnectionContext& _rctx) {
             
-            if(_rthis.version_.init_request_ == Version::init_request){
+            if(_rthis.store_version_.init_request_ == Version::init_request){
                 _s.add(_rthis.core_version_, _rctx, 3, "core_version");
                 _s.add(_rthis.main_version_, _rctx, 4, "main_version");
                 _s.add(_rthis.utility_version_, _rctx, 5, "utility_version");
@@ -84,8 +84,8 @@ struct AcquireAppRequest : solid::frame::mprpc::Message {
 template <class Reg>
 inline void configure_protocol(Reg _rreg)
 {
-    _rreg(protocol_id, 1, "InitRequest", solid::TypeToType<InitRequest>());
-    _rreg(protocol_id, 2, "AcquireAppRequest", solid::TypeToType<AcquireAppRequest>());
+    _rreg({protocol_id, 1}, "InitRequest", solid::TypeToType<InitRequest>());
+    _rreg({protocol_id, 2}, "AcquireAppRequest", solid::TypeToType<AcquireAppRequest>());
 }
 
 } //namespace store
