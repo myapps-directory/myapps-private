@@ -1,7 +1,7 @@
 #pragma once
-#include "ola/common/ola_front_protocol_main.hpp"
+#include "myapps/common/front_protocol_main.hpp"
 
-namespace ola {
+namespace myapps {
 namespace front {
 namespace store {
 constexpr uint8_t protocol_id = 3;
@@ -76,4 +76,4 @@ inline void configure_protocol(Reg _rreg)
 
 } //namespace store
 } //namespace front
-} //namespace ola
+} //namespace myapps
