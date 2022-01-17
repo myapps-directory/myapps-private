@@ -1,2 +1,2 @@
-# ola-private
-OLA private API
+# myapps-private
+MyApps.space private API
