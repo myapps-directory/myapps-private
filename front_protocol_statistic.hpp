@@ -105,11 +105,11 @@ struct FetchResponse : solid::frame::mprpc::Message {
 };
 
 struct DescribeRequest : solid::frame::mprpc::Message {
-    std::string group_;
+    std::string name_;
 
     SOLID_REFLECT_V1(_r, _rthis, _rctx)
     {
-        _r.add(_rthis.group_, _rctx, 2, "group");
+        _r.add(_rthis.name_, _rctx, 2, "name");
     }
 };
 
