@@ -70,19 +70,17 @@ struct InitRequest : solid::frame::mprpc::Message {
 };
 
 struct FetchRequest : solid::frame::mprpc::Message {
-    std::string              group_name_;
+    std::string              name_;
     std::vector<std::string> name_vec_;
 
     SOLID_REFLECT_V1(_r, _rthis, _rctx)
     {
-        _r.add(_rthis.group_name_, _rctx, 1, "group_name");
+        _r.add(_rthis.name_, _rctx, 1, "name");
         _r.add(_rthis.name_vec_, _rctx, 2, "name_vec");
     }
 };
 
 struct FetchResponse : solid::frame::mprpc::Message {
-    uint32_t                 error_ = -1;
-    std::string              message_;
     std::vector<std::string> type_def_vec_;
     std::vector<uint64_t>    data_uint_vec_;
     std::vector<std::string> data_string_vec_;
@@ -96,8 +94,6 @@ struct FetchResponse : solid::frame::mprpc::Message {
 
     SOLID_REFLECT_V1(_r, _rthis, _rctx)
     {
-        _r.add(_rthis.error_, _rctx, 1, "error");
-        _r.add(_rthis.message_, _rctx, 2, "message");
         _r.add(_rthis.type_def_vec_, _rctx, 3, "type_def_vec");
         _r.add(_rthis.data_uint_vec_, _rctx, 4, "data_uint_vec");
         _r.add(_rthis.data_string_vec_, _rctx, 5, "data_string_vec");

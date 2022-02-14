@@ -30,7 +30,7 @@ void append(const Enum _id, const DescriptionVectorT& _des_vec, const ValType& _
 {
     const auto index = solid::to_underlying(_id);
     solid_check(index < _des_vec.size());
-    if (_des_vec[index].type_def_.empty() || _des_vec[index].type_def_[0] == 'u') {
+    if (_des_vec[index].type_def_[0] == 'u') {
         if constexpr (std::is_same_v<ValType, uint64_t>) {
             _ucontainer.emplace_back(_val);
         } else {
