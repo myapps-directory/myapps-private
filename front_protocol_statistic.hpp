@@ -115,7 +115,6 @@ struct DescribeRequest : solid::frame::mprpc::Message {
 struct DescribeResponse : solid::frame::mprpc::Message {
     using DescriptionT = myapps::utility::statistic::Description;
 
-    uint32_t                  error_ = 0;
     std::vector<DescriptionT> description_vec_;
 
     DescribeResponse() {}
@@ -128,7 +127,6 @@ struct DescribeResponse : solid::frame::mprpc::Message {
 
     SOLID_REFLECT_V1(_r, _rthis, _rctx)
     {
-        _r.add(_rthis.error_, _rctx, 1, "version");
         _r.add(_rthis.description_vec_, _rctx, 2, "description_vec");
     }
 };
