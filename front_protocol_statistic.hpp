@@ -7,6 +7,9 @@ namespace front {
 namespace statistic {
 constexpr uint8_t protocol_id = 4;
 
+using DescriptionT       = myapps::utility::statistic::Description;
+using DescriptionVectorT = myapps::utility::statistic::DescriptionVectorT;
+
 //the version is only transfered from client to server.
 //the client will NOT know the server version
 struct Version {
@@ -81,10 +84,8 @@ struct FetchRequest : solid::frame::mprpc::Message {
 };
 
 struct FetchResponse : solid::frame::mprpc::Message {
-    using EntryTupleT  = std::tuple<std::string, std::string>;
-    using EntryVectorT = std::vector<EntryTupleT>;
-
-    EntryVectorT             entry_vec_;
+    std::string              name_;
+    DescriptionVectorT       description_vec_;
     std::vector<uint64_t>    data_uint_vec_;
     std::vector<std::string> data_string_vec_;
 
@@ -97,7 +98,8 @@ struct FetchResponse : solid::frame::mprpc::Message {
 
     SOLID_REFLECT_V1(_r, _rthis, _rctx)
     {
-        _r.add(_rthis.entry_vec_, _rctx, 3, "entry_vec");
+        _r.add(_rthis.name_, _rctx, 2, "name");
+        _r.add(_rthis.description_vec_, _rctx, 3, "description_vec");
         _r.add(_rthis.data_uint_vec_, _rctx, 4, "data_uint_vec");
         _r.add(_rthis.data_string_vec_, _rctx, 5, "data_string_vec");
     }

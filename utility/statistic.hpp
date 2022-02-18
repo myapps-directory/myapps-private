@@ -13,13 +13,24 @@ namespace statistic {
 struct Description {
     std::string name_;
     std::string type_def_;
+    std::string unit_;
     std::string description_;
+
+    Description(
+        const std::string& _name = "", const std::string _type_def = "", const std::string _unit = "", const std::string& _description = "")
+        : name_(_name)
+        , type_def_(_type_def)
+        , unit_(_unit)
+        , description_(_description)
+    {
+    }
 
     SOLID_REFLECT_V1(_r, _rthis, _rctx)
     {
         _r.add(_rthis.name_, _rctx, 1, "name");
-        _r.add(_rthis.type_def_, _rctx, 1, "type_def");
-        _r.add(_rthis.description_, _rctx, 1, "description");
+        _r.add(_rthis.type_def_, _rctx, 2, "type_def");
+        _r.add(_rthis.unit_, _rctx, 3, "unit");
+        _r.add(_rthis.description_, _rctx, 4, "description");
     }
 };
 
