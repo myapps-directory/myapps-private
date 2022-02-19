@@ -57,6 +57,32 @@ void append(const Enum _id, const DescriptionVectorT& _des_vec, const ValType& _
         solid_throw("Invalid type_def");
     }
 }
+
+std::ostream& print(std::ostream& _ros, uint64_t _value, const std::string& _type_def, const std::string& _unit);
+std::ostream& print(std::ostream& _ros, const std::string& _value, const std::string& _type_def, const std::string& _unit);
+
+template <class UIt, class SIt>
+std::ostream& print(std::ostream& _ros, const DescriptionVectorT& _des_vec, const char _formatting, UIt _uit, const UIt& _uend, SIt _sit, const SIt& _send)
+{
+    solid_check(_formatting == 's', "Unknown formatting " << _formatting);
+    for (const auto& des : _des_vec) {
+        if (!des.type_def_.empty()) {
+            _ros << '[' << des.name_ << ": ";
+            if (des.type_def_[0] == 'u') {
+                solid_check(_uit != _uend);
+                print(_ros, *_uit, des.type_def_, des.unit_);
+            } else if (des.type_def_[0] == 's') {
+                solid_check(_sit != _send);
+                print(_ros, *_sit, des.type_def_, des.unit_);
+            } else {
+                solid_throw("Unknown Type: " << des.type_def_);
+            }
+            _ros << ']';
+        }
+    }
+    return _ros;
+}
+
 } //namespace statistic
 } //namespace utility
 } //namespace myapps
