@@ -20,7 +20,7 @@ std::ostream& print(std::ostream& _ros, uint64_t _value, const std::string& _typ
     } else if (_type_def[1] == 'f') {
         auto val  = _type_def.substr(2);
         auto uval = stoul(val);
-        _ros << _value / uval << std::setfill('0') << std::setw(val.size() - 1) << _value % uval;
+        _ros << _value / uval << '.' << std::setfill('0') << std::setw(val.size() - 1) << _value % uval;
     } else {
         _ros << _value << '!';
     }

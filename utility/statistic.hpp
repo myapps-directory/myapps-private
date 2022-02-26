@@ -71,9 +71,11 @@ std::ostream& print(std::ostream& _ros, const DescriptionVectorT& _des_vec, cons
             if (des.type_def_[0] == 'u') {
                 solid_check(_uit != _uend);
                 print(_ros, *_uit, des.type_def_, des.unit_);
+                ++_uit;
             } else if (des.type_def_[0] == 's') {
                 solid_check(_sit != _send);
                 print(_ros, *_sit, des.type_def_, des.unit_);
+                ++_sit;
             } else {
                 solid_throw("Unknown Type: " << des.type_def_);
             }
