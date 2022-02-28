@@ -1,10 +1,14 @@
 #pragma once
 #include "myapps/common/front_protocol_main.hpp"
+#include "myapps/private/utility/statistic.hpp"
 
 namespace myapps {
 namespace front {
 namespace statistic {
 constexpr uint8_t protocol_id = 4;
+
+using DescriptionT       = myapps::utility::statistic::Description;
+using DescriptionVectorT = myapps::utility::statistic::DescriptionVectorT;
 
 //the version is only transfered from client to server.
 //the client will NOT know the server version
@@ -68,39 +72,52 @@ struct InitRequest : solid::frame::mprpc::Message {
     }
 };
 
-
-struct Fetch : solid::frame::mprpc::Message {
-    using ItemPairT = std::pair<std::string, uint64_t>;
-    using ItemVectorT                 = std::vector<ItemPairT>;
-    
-    uint32_t    error_ = 0;
-    std::string group_;
-    uint32_t    index_ = 0;
-    ItemVectorT item_vector_; //empty means all items in the group[index_]
+struct FetchRequest : solid::frame::mprpc::Message {
+    std::string              name_;
+    std::vector<std::string> name_vec_;
 
     SOLID_REFLECT_V1(_r, _rthis, _rctx)
     {
-        _r.add(_rthis.error_, _rctx, 1, "error");
-        _r.add(_rthis.group_, _rctx, 2, "group");
-        _r.add(_rthis.index_, _rctx, 3, "index");
-        _r.add(_rthis.item_vector_, _rctx, 4, "item_vector");
+        _r.add(_rthis.name_, _rctx, 1, "name");
+        _r.add(_rthis.name_vec_, _rctx, 2, "name_vec");
+    }
+};
+
+struct FetchResponse : solid::frame::mprpc::Message {
+    std::string              name_;
+    DescriptionVectorT       description_vec_;
+    std::vector<uint64_t>    data_uint_vec_;
+    std::vector<std::string> data_string_vec_;
+
+    FetchResponse() = default;
+
+    FetchResponse(const FetchRequest& _req)
+        : solid::frame::mprpc::Message(_req)
+    {
+    }
+
+    SOLID_REFLECT_V1(_r, _rthis, _rctx)
+    {
+        _r.add(_rthis.name_, _rctx, 2, "name");
+        _r.add(_rthis.description_vec_, _rctx, 3, "description_vec");
+        _r.add(_rthis.data_uint_vec_, _rctx, 4, "data_uint_vec");
+        _r.add(_rthis.data_string_vec_, _rctx, 5, "data_string_vec");
     }
 };
 
 struct DescribeRequest : solid::frame::mprpc::Message {
-    std::string group_;
+    std::string name_;
 
     SOLID_REFLECT_V1(_r, _rthis, _rctx)
     {
-        _r.add(_rthis.group_, _rctx, 2, "group");
+        _r.add(_rthis.name_, _rctx, 2, "name");
     }
 };
 
 struct DescribeResponse : solid::frame::mprpc::Message {
-    using DescriptionTupleT = std::tuple<std::string, uint32_t, std::string>;//name, id, description
-    
-    uint32_t                     error_ = 0;
-    std::vector<DescriptionTupleT> description_vector_;
+    using DescriptionT = myapps::utility::statistic::Description;
+
+    std::vector<DescriptionT> description_vec_;
 
     DescribeResponse() {}
 
@@ -112,8 +129,7 @@ struct DescribeResponse : solid::frame::mprpc::Message {
 
     SOLID_REFLECT_V1(_r, _rthis, _rctx)
     {
-        _r.add(_rthis.error_, _rctx, 1, "version");
-        _r.add(_rthis.description_vector_, _rctx, 2, "description_vector");
+        _r.add(_rthis.description_vec_, _rctx, 2, "description_vec");
     }
 };
 
@@ -121,14 +137,12 @@ template <class Reg>
 inline void configure_protocol(Reg _rreg)
 {
     _rreg({protocol_id, 1}, "InitRequest", solid::TypeToType<InitRequest>());
-    _rreg({protocol_id, 2}, "Fetch", solid::TypeToType<Fetch>());
-    _rreg({protocol_id, 3}, "DescribeRequest", solid::TypeToType<DescribeRequest>());
-    _rreg({protocol_id, 4}, "DescribeResponse", solid::TypeToType<DescribeResponse>());
+    _rreg({protocol_id, 2}, "FetchRequest", solid::TypeToType<FetchRequest>());
+    _rreg({protocol_id, 3}, "FetchResponse", solid::TypeToType<FetchResponse>());
+    _rreg({protocol_id, 4}, "DescribeRequest", solid::TypeToType<DescribeRequest>());
+    _rreg({protocol_id, 5}, "DescribeResponse", solid::TypeToType<DescribeResponse>());
 }
-
-
 
 } //namespace statistic
 } //namespace front
 } //namespace myapps
-
