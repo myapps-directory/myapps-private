@@ -1,2 +1,2 @@
 # myapps-private
-MyApps.space private API
+MyApps.directory private API
