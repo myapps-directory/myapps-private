@@ -85,6 +85,6 @@ std::ostream& print(std::ostream& _ros, const DescriptionVectorT& _des_vec, cons
     return _ros;
 }
 
-} //namespace statistic
-} //namespace utility
-} //namespace myapps
+} // namespace statistic
+} // namespace utility
+} // namespace myapps

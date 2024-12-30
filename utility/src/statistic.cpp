@@ -33,6 +33,6 @@ std::ostream& print(std::ostream& _ros, const std::string& _value, const std::st
     return _ros;
 }
 
-} //namespace statistic
-} //namespace utility
-} //namespace myapps
+} // namespace statistic
+} // namespace utility
+} // namespace myapps

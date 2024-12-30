@@ -10,8 +10,8 @@ constexpr uint8_t protocol_id = 4;
 using DescriptionT       = myapps::utility::statistic::Description;
 using DescriptionVectorT = myapps::utility::statistic::DescriptionVectorT;
 
-//the version is only transfered from client to server.
-//the client will NOT know the server version
+// the version is only transfered from client to server.
+// the client will NOT know the server version
 struct Version {
     static constexpr uint32_t version             = 1;
     static constexpr uint32_t acquire_app_request = 1;
@@ -143,6 +143,6 @@ inline void configure_protocol(Reg _rreg)
     _rreg({protocol_id, 5}, "DescribeResponse", solid::TypeToType<DescribeResponse>());
 }
 
-} //namespace statistic
-} //namespace front
-} //namespace myapps
+} // namespace statistic
+} // namespace front
+} // namespace myapps

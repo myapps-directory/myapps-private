@@ -6,8 +6,8 @@ namespace front {
 namespace store {
 constexpr uint8_t protocol_id = 3;
 
-//the version is only transfered from client to server.
-//the client will NOT know the server version
+// the version is only transfered from client to server.
+// the client will NOT know the server version
 struct Version {
     static constexpr uint32_t version             = 1;
     static constexpr uint32_t acquire_app_request = 1;
@@ -74,6 +74,6 @@ inline void configure_protocol(Reg _rreg)
     _rreg({protocol_id, 1}, "InitRequest", solid::TypeToType<InitRequest>());
 }
 
-} //namespace store
-} //namespace front
-} //namespace myapps
+} // namespace store
+} // namespace front
+} // namespace myapps
